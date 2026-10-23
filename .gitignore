@@ -1,0 +1,39 @@
+# РЎР•РљР Р•РўР« вЂ” РЅРёРєРѕРіРґР° РЅРµ РєРѕРјРјРёС‚РёС‚СЊ
+.env
+.env.*
+!.env.example
+*.env
+service_account*.json
+gcp-*.json
+credentials*.json
+token*.json
+
+# РџРµСЂСЃРѕРЅР°Р»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ Рё СЂР°Р±РѕС‡РёРµ С„Р°Р№Р»С‹
+data/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.log
+*.csv
+applications_export*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+
+# Выводы служебных запусков
+diagout.txt
+testout.txt
