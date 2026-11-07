@@ -45,6 +45,18 @@ if ([version]$version -lt [version]'3.11') {
     exit 1
 }
 
+# Python 3.15 на Windows может видеть урезанное системное хранилище корней
+# (здесь 28 сертификатов): lp.vk.com присылает цепочку SSL.com, её корня в
+# хранилище нет, и Long Poll падает с CERTIFICATE_VERIFY_FAILED, хотя api.vk.com
+# и ProxyAPI открываются. certifi содержит полный набор корней — явно укажем
+# его как доверенный. Если certifi не установлен, оставляем как было.
+if (-not $env:SSL_CERT_FILE) {
+    $caBundle = & $python -c "import certifi; print(certifi.where())" 2>$null
+    if ($LASTEXITCODE -eq 0 -and $caBundle) {
+        $env:SSL_CERT_FILE = ($caBundle | Select-Object -First 1).Trim()
+    }
+}
+
 if (-not (Test-Path -LiteralPath '.env')) {
     Write-Host 'Файл .env не найден.' -ForegroundColor Yellow
     Write-Host 'Скопируйте шаблон и впишите токен сообщества и ключ Proxy API:' -ForegroundColor Yellow
